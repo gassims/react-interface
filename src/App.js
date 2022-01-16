@@ -8,58 +8,76 @@ import CourseInfo from './components/CourseInfo';
 
 
 function App() {
+
   let [courseList, setCourseList] = useState([]);
   let [query, setQuery] = useState("");
   let [sortBy, setSortBy] = useState("courseName");
-  let [orderBy, setOrderBy] = useState("asc");  
+  let [orderBy, setOrderBy] = useState("asc");
 
-  const filterCourses = courseList.filter(
+  const filteredCourses = courseList.filter(
     item => {
-      return(
+      return (
         item.courseName.toLowerCase().includes(query.toLowerCase()) ||
         item.instructor.toLowerCase().includes(query.toLowerCase()) ||
         item.courseNotes.toLowerCase().includes(query.toLowerCase())
       )
     }
-  ).sort((a,b)=>{
-    let order= (orderBy === 'asc') ? 1 : -1;
+  ).sort((a, b) => {
+    let order = (orderBy === 'asc') ? 1 : -1;
     return (
-      a[sortBy].toLowerCase() < b[sortBy].toLowerCase() ? -1 * order : 1 * order
+      a[sortBy].toLowerCase() < b[sortBy].toLowerCase()
+        ? -1 * order : 1 * order
     )
   })
 
-  const fetchData = useCallback(()=>{
-    fetch('./data.json',)
+  const fetchData = useCallback(() => {
+    fetch('./data.json')
       .then(response => response.json())
-      .then(data=>{
+      .then(data => {
         setCourseList(data)
       });
-  },[])
+  }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData()
-  },[fetchData])
-
+  }, [fetchData]);
 
   return (
     <div className="App container mx-auto mt-3 font-thin">
-      <h1 className="text-5xl">
-        <MdAllInclusive className="inline-block text-teal-500"/>Dog, Butterfly<MdAllInclusive className="inline-block text-teal-500"/></h1>
-      <AddCourse />
-      <Search query={query} onQueryChange={myQuery => setQuery(myQuery)}
-              orderBy={orderBy} onOrderByChange={mySort => setOrderBy(mySort)}
-              sortBy={sortBy} onSortByChange={mySort => setSortBy(mySort)}/>
+      <h1 className="text-5xl mb-3">
+        <MdAllInclusive className="inline-block text-teal-400 align-top" />Your Courses
+        <MdAllInclusive className="inline-block text-teal-400 align-top" />
+      </h1>
+        
+      <AddCourse
+        onSendCourse={myCourse => setCourseList([...courseList, myCourse])}
+        lastId={courseList.reduce((max, item) => Number(item.id) > max ? Number(item.id) : max, 0)}
+      />
+      <Search query={query}
+        onQueryChange={myQuery => setQuery(myQuery)}
+        orderBy={orderBy}
+        onOrderByChange={mySort => setOrderBy(mySort)}
+        sortBy={sortBy}
+        onSortByChange={mySort => setSortBy(mySort)}
+      />
 
-      <ul className='divide-y divide-gray-300'>
-        {filterCourses.map((course)=>(
-          <CourseInfo key={course.id}
-          course={course}
-          onDeleteCourse={courseId => setCourseList(courseList.filter(course=>course.id !== courseId))} />
-          ))}
+      <ul className="divide-y divide-gray-200">
+        {filteredCourses
+          .map(course => (
+            <CourseInfo key={course.id}
+              course={course}
+              onDeleteCourse={
+                courseId =>
+                  setCourseList(courseList.filter(course =>
+                    course.id !== courseId))
+              }
+            />
+          ))
+        }
       </ul>
     </div>
   );
-  }
+}
 
 
 export default App;
