@@ -46,7 +46,10 @@ function App() {
       <h1 className="text-5xl">
         <MdAllInclusive className="inline-block text-teal-500"/>Dog, Butterfly<MdAllInclusive className="inline-block text-teal-500"/></h1>
       <AddCourse />
-      <Search query={query} onQueryChange={myQuery => setQuery(myQuery)} />
+      <Search query={query} onQueryChange={myQuery => setQuery(myQuery)}
+              orderBy={orderBy} onOrderByChange={mySort => setOrderBy(mySort)}
+              sortBy={sortBy} onSortByChange={mySort => setSortBy(mySort)}/>
+
       <ul className='divide-y divide-gray-300'>
         {filterCourses.map((course)=>(
           <CourseInfo key={course.id}
