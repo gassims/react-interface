@@ -1,0 +1,39 @@
+[
+    {
+      "id": "0",
+      "courseName": "ReallyCoolCourse",
+      "instructor": "ReallyCoolInstructor",
+      "courseNotes": "we can use -D with npm install to pin",
+      "courseDate": "2022-01-16 00:00"
+    },{
+        "id": "1",
+        "courseName": "ReallyCoolCourse",
+        "instructor": "ReallyCoolInstructor",
+        "courseNotes": "we can use -D with npm install to pin",
+        "courseDate": "2022-01-16 00:00"
+      },{
+        "id": "2",
+        "courseName": "ReallyCoolCourse",
+        "instructor": "ReallyCoolInstructor",
+        "courseNotes": "we can use -D with npm install to pin",
+        "courseDate": "2022-01-16 00:00"
+      },{
+        "id": "3",
+        "courseName": "ReallyCoolCourse",
+        "instructor": "ReallyCoolInstructor",
+        "courseNotes": "we can use -D with npm install to pin",
+        "courseDate": "2022-01-16 00:00"
+      },{
+        "id": "4",
+        "courseName": "ReallyCoolCourse",
+        "instructor": "ReallyCoolInstructor",
+        "courseNotes": "we can use -D with npm install to pin",
+        "courseDate": "2022-01-16 00:00"
+      },{
+        "id": "5",
+        "courseName": "ReallyCoolCourse",
+        "instructor": "ReallyCoolInstructor",
+        "courseNotes": "we can use -D with npm install to pin",
+        "courseDate": "2022-01-16 00:00"
+      }
+  ]
