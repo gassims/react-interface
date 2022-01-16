@@ -4,8 +4,29 @@ import Search from './components/Search';
 import AddCourse from './components/AddCourse';
 import CourseInfo from './components/CourseInfo';
 
+
+
+
 function App() {
   let [courseList, setCourseList] = useState([]);
+  let [query, setQuery] = useState("");
+  let [sortBy, setSortBy] = useState("courseName");
+  let [orderBy, setOrderBy] = useState("asc");  
+
+  const filterCourses = courseList.filter(
+    item => {
+      return(
+        item.courseName.toLowerCase().includes(query.toLowerCase()) ||
+        item.instructor.toLowerCase().includes(query.toLowerCase()) ||
+        item.courseNotes.toLowerCase().includes(query.toLowerCase())
+      )
+    }
+  ).sort((a,b)=>{
+    let order= (orderBy === 'asc') ? 1 : -1;
+    return (
+      a[sortBy].toLowerCase() < b[sortBy].toLowerCase() ? -1 * order : 1 * order
+    )
+  })
 
   const fetchData = useCallback(()=>{
     fetch('./data.json',)
@@ -25,9 +46,13 @@ function App() {
       <h1 className="text-5xl">
         <MdAllInclusive className="inline-block text-teal-500"/>Dog, Butterfly<MdAllInclusive className="inline-block text-teal-500"/></h1>
       <AddCourse />
-      <Search />
+      <Search query={query} onQueryChange={myQuery => setQuery(myQuery)} />
       <ul className='divide-y divide-gray-300'>
-        {courseList.map((course)=>(<h1><CourseInfo key={course.id} name={course} />...</h1>))}
+        {filterCourses.map((course)=>(
+          <CourseInfo key={course.id}
+          course={course}
+          onDeleteCourse={courseId => setCourseList(courseList.filter(course=>course.id !== courseId))} />
+          ))}
       </ul>
     </div>
   );
